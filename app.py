@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
-
+from linebot.exceptions import LineBotApiError
 from fsm import TocMachine
 from utils import send_text_message
 
@@ -52,7 +52,7 @@ line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 
 try:
-    line_bot_api.push_message(U06538a5ba60fdf5d470b458296993e3d, TextSendMessage(text='想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請輸入開始以便使用本服務'))
+    line_bot_api.push_message('U06538a5ba60fdf5d470b458296993e3d', TextSendMessage(text='想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請輸入開始以便使用本服務'))
 except LineBotApiError as e:
     # error handle
     raise e
