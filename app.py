@@ -71,10 +71,15 @@ def callback():
             continue
         if not isinstance(event.message, TextMessage):
             continue
-
-        line_bot_api.reply_message(
+        text = event.message.text
+        if text == 'test':
+            line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text = "test success")
+            )
+        else:
+            line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text=event.message.text)
-        )
+            )
 
     return "OK"
 
