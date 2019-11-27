@@ -51,7 +51,11 @@ if channel_access_token is None:
 line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 
-
+try:
+    line_bot_api.push_message(U06538a5ba60fdf5d470b458296993e3d, TextSendMessage(text='想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請輸入開始以便使用本服務'))
+except LineBotApiError as e:
+    # error handle
+    raise e
 @app.route("/callback", methods=["POST"])
 def callback():
     signature = request.headers["X-Line-Signature"]
