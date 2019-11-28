@@ -16,8 +16,11 @@ load_dotenv()
 machine = TocMachine(
     states=[
         "user", 
-        "state1",
-        "state2"
+        "menu",
+        "queen",
+        "war",
+        "guanyin",
+        "cing"
     ],
     transitions=[
         {
