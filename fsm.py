@@ -10,25 +10,25 @@ class TocMachine(GraphMachine):
 
     def is_going_to_menu(self, event):
         text = event.message.text
-        return text == '開始'
+        return text.lower() == "開始"
         #return text.lower() == "go to state1"
 
     def is_going_to_queen(self, event):
         text = event.message.text
-        return text == '單戀中，求紅線' or text == '有對象，希望感情加溫'
+        return text.lower() == "單戀中，求紅線" or text.lower() == "有對象，希望感情加溫"
         """
         return text.lower() == "go to state2"""
     def is_going_to_war(self, event):
         text = event.message.text
-        return text == '想砍掉爛桃花'
+        return text.lower() == '想砍掉爛桃花'
 
     def is_going_to_guanyin(self, event):
         text = event.message.text 
-        return text == '單身，求姻緣'
+        return text.lower() == '單身，求姻緣'
        
     def is_going_to_cing(self, event):
         text = event.message.text
-        return text == '求感情復合'
+        return text.lower() == '求感情復合'
         
 # enter #
 
