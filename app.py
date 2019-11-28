@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage
 from linebot.exceptions import LineBotApiError
 from fsm import TocMachine
 from utils import send_text_message
@@ -14,21 +14,52 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=[
+        "user", 
+        "state1",
+        "state2"
+    ],
     transitions=[
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "dest": "menu",
+            "conditions": "is_going_to_menu",
         },
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "source": "menu",
+            "dest": "queen",
+            "conditions": "is_going_to_queen",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "menu",
+            "dest": "war",
+            "conditions": "is_going_to_war",
+        },
+        {
+            "trigger": "advance",
+            "source": "menu",
+            "dest": "guanyin",
+            "conditions": "is_going_to_guanyin",
+        },
+        {
+            "trigger": "advance",
+            "source": "menu",
+            "dest": "cing",
+            "conditions": "is_going_to_cing",
+        },
+        {
+            "trigger": "go_back",
+            "source": [
+                "queen", 
+                "war",
+                "guanyin",
+                "cing"
+            ], 
+            "dest": "menu"
+        }
     ],
     initial="user",
     auto_transitions=False,
@@ -70,7 +101,7 @@ def callback():
         abort(400)
 
     # if event is MessageEvent and message is TextMessage, then echo text
-    for event in events:
+    """for event in events:
         if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):
@@ -83,7 +114,7 @@ def callback():
         else:
             line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text=event.message.text)
-            )
+            )"""
 
     return "OK"
 
