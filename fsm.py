@@ -175,7 +175,7 @@ class TocMachine(GraphMachine):
         template=ButtonsTemplate(
             title='為什麼想拜月老',#？',
             text='不同廟的月老有不同的專長\n選擇適合你的或許能更快完成心願喔',#！',
-            thumbnail_image_url='https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+            #thumbnail_image_url='https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
             actions=[
                 MessageTemplateAction(
                 label="1",#'單身，求姻緣',
@@ -196,7 +196,7 @@ class TocMachine(GraphMachine):
                 MessageTemplateAction(
                 label="5",#'求感情復合',
                 text="5"#'求感情復合'
-                    )
+                )
                 ]
             )
         )
