@@ -137,14 +137,14 @@ def webhook_handler():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
-        """if not isinstance(event, MessageEvent):
+        if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):
             continue
         if not isinstance(event.message.text, str):
             continue
         print(f"\nFSM STATE: {machine.state}")
-        print(f"REQUEST BODY: \n{body}")"""
+        print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
             send_text_message(event.reply_token, "Not Entering any State")
