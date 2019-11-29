@@ -108,12 +108,7 @@ class TocMachine(GraphMachine):
         print("Leaving cing")
         """
 from transitions.extensions import GraphMachine
-import os
-from linebot import LineBotApi, WebhookParser
-from linebot.models import *
-channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
 from utils import send_text_message
-line_bot_api = LineBotApi(channel_access_token)
 
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
@@ -170,7 +165,7 @@ class TocMachine(GraphMachine):
             }
         }
         reply_token = event.reply_token
-        line_bot_api.reply_message(reply_token, message)
+        send_text_message(reply_token, message)
         self.go_back()
 
     def on_exit_state1(self):
