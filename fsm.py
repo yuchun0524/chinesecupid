@@ -226,9 +226,11 @@ class TocMachine(GraphMachine):
         ]
     )
 )
+        message2 = TextSendMessage(text="option")
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, message)
+        line_bot_api.reply_message(reply_token, message2)
         self.go_back()
 
     def on_exit_state1(self):
