@@ -175,7 +175,7 @@ class TocMachine(GraphMachine):
         template=ButtonsTemplate(
             title='為什麼想拜月老？',
             text='不同廟的月老有不同的專長，選擇適合你的或許能更快完成心願喔！',
-            thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuz6VkzNxBKNK8QcHZspwJP_sQOcYReWEjh603OESaHkG0mN2wEQ&s#',
+            thumbnail_image_url='https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
             actions=[
                 MessageTemplateAction(
                 label='單身，求姻緣',
@@ -209,9 +209,11 @@ class TocMachine(GraphMachine):
 
     def on_enter_state2(self, event):
         print("I'm entering state2")
-
+        message = TextSendMessage(text="Trigger state2")
         reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state2")
+        line_bot_api = LineBotApi(channel_access_token)
+        line_bot_api.reply_message(reply_token, message)
+        #send_text_message(reply_token, "Trigger state2")
         self.go_back()
 
     def on_exit_state2(self):
