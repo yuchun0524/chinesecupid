@@ -212,16 +212,16 @@ class TocMachine(GraphMachine):
                 text='message text'
             ),
             MessageTemplateAction(
-                label='1',#'單身，求姻緣',
-                text='1'#'單身，求姻緣'
+                label='單身，求姻緣',
+                text='單身，求姻緣'
             ),
             MessageTemplateAction(
-                label='2',#'單戀中，求紅線',
-                text='2'#'單戀中，求紅線'
+                label='單戀中，求紅線',
+                text='單戀中，求紅線'
             ),
             MessageTemplateAction(
-                label='3',#'有對象，希望感情加溫',
-                text='3'#'有對象，希望感情加溫'
+                label='有對象，希望感情加溫',
+                text='有對象，希望感情加溫'
             )
         ]
     )
