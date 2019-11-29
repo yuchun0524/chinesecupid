@@ -108,9 +108,12 @@ class TocMachine(GraphMachine):
         print("Leaving cing")
         """
 from transitions.extensions import GraphMachine
-
+import os
+from linebot import LineBotApi, WebhookParser
+from linebot.models import *
+channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
 from utils import send_text_message
-
+line_bot_api = LineBotApi(channel_access_token)
 
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
@@ -126,9 +129,48 @@ class TocMachine(GraphMachine):
 
     def on_enter_state1(self, event):
         print("I'm entering state1")
-
+        message = {
+            "type": "template",
+            "altText":"不支援顯示樣板，請使用手機裝置",
+            "template":{
+                "type": "buttons",
+                "imageAspectRatio": "rectangle",
+                "imageSize": "contain",
+                "thumbnailImageUrl" :"https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                "imageBackgroundColor":"#a8e8fb",
+                "title":"為什麼想拜月老？",
+                "text":"不同廟的月老有不同的專長，選擇適合你的或許能更快完成心願喔！",
+                "actions":[
+                    {
+                        "type": "message",
+                        "label": "單身，求姻緣",
+                        "text": "單身，求姻緣"
+                    },
+                    {
+                        "type": "message",
+                        "label":"單戀中，求紅線",
+                        "text":"單戀中，求紅線"
+                    },
+                    {
+                        "type": "message",
+                        "label":"有對象，希望感情加溫",
+                        "text":"有對象，希望感情加溫"
+                    },
+                    {
+                        "type": "message",
+                        "label":"想砍掉爛桃花",
+                        "text":"想砍掉爛桃花"
+                    },
+                    {
+                        "type": "message",
+                        "label":"求感情復合",
+                        "text":"求感情復合"
+                    }
+                ]
+            }
+        }
         reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state1")
+        line_bot_api.reply_message(reply_token, message)
         self.go_back()
 
     def on_exit_state1(self):
