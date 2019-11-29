@@ -207,14 +207,21 @@ class TocMachine(GraphMachine):
         title='Menu',
         text='Please select',
         actions=[
-            PostbackTemplateAction(
-                label='postback',
-                text='postback text',
-                data='action=buy&itemid=1'
-            ),
             MessageTemplateAction(
                 label='message',
                 text='message text'
+            ),
+            MessageTemplateAction(
+                label='1',#'單身，求姻緣',
+                text='1'#'單身，求姻緣'
+            ),
+            MessageTemplateAction(
+                label='2',#'單戀中，求紅線',
+                text='2'#'單戀中，求紅線'
+            ),
+            MessageTemplateAction(
+                label='3',#'有對象，希望感情加溫',
+                text='3'#'有對象，希望感情加溫'
             )
         ]
     )
