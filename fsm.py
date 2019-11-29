@@ -83,19 +83,19 @@ class TocMachine(GraphMachine):
         title='對月老有什麼祈求？',
         text='不同廟的月老有不同的專長，說出你的願望我能幫你選擇適合的月老喔！',
         actions=[
-            MessageTemplateAction(
+            MessageAction(
                 label='想砍掉爛桃花',
                 text='想砍掉爛桃花'
             ),
-            MessageTemplateAction(
+            MessageAction(
                 label='求感情復合',
                 text='求感情復合'
             ),
-            MessageTemplateAction(
+            MessageAction(
                 label='無喜歡對象，求姻緣',
                 text='無喜歡對象，求姻緣'
             ),
-            MessageTemplateAction(
+            MessageAction(
                 label='單戀或曖昧中，求紅線',
                 text='單戀或曖昧中，求紅線'
             )
@@ -116,15 +116,15 @@ class TocMachine(GraphMachine):
         title='對月老有什麼祈求？',
         text='不同廟的月老有不同的專長，說出你的願望我能幫你選擇適合的月老喔！',
         actions=[
-            MessageTemplateAction(
+            MessageAction(
                 label='想砍掉爛桃花',
                 text='想砍掉爛桃花'
             ),
-            MessageTemplateAction(
+            MessageAction(
                 label='求感情修復',
                 text='求感情修復'
             ),
-            MessageTemplateAction(
+            MessageAction(
                 label='希望感情加溫',
                 text='希望感情加溫'
             )
