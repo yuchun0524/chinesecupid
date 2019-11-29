@@ -5,13 +5,12 @@ from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
 
 load_dotenv()
-
 
 machine = TocMachine(
     states=[
@@ -102,7 +101,7 @@ parser = WebhookParser(channel_secret)
 """try:
     line_bot_api.push_message('U06538a5ba60fdf5d470b458296993e3d', TextSendMessage(text='想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請輸入開始以便使用本服務'))
     except LineBotApiError as e:
-    # error handle
+    error handle
     raise e"""
 @app.route("/callback", methods=["POST"])
 def callback():
