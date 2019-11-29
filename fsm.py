@@ -1,11 +1,19 @@
-"""import os
+import os
 
 from linebot import LineBotApi, WebhookParser
 from transitions.extensions import GraphMachine
 from linebot.models import *
-from utils import send_text_message, send_button_message
+from utils import send_text_message
 channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
-
+"""
+文字訊息傳遞範例
+message = TextSendMessage(text="Trigger state2")
+        reply_token = event.reply_token
+        line_bot_api = LineBotApi(channel_access_token)
+        line_bot_api.reply_message(reply_token, message)
+        #send_text_message(reply_token, "Trigger state2")
+        self.go_back()
+"""
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
@@ -14,65 +22,119 @@ class TocMachine(GraphMachine):
     def is_going_to_menu(self, event):
         text = event.message.text
         return text.lower() == "開始"
-        #return text.lower() == "go to state1"
+
+    def is_going_to_single(self, event):
+        text = event.message.text
+        return text.lower() == "單身"
+
+    def is_going_to_notsingle(self, event):
+        text = event.message.text
+        return text.lower() == "非單身"
 
     def is_going_to_queen(self, event):
         text = event.message.text
-        return text.lower() == "單戀中，求紅線" or text.lower() == "有對象，希望感情加溫"
-        
-        return text.lower() == "go to state2"
+        return text.lower() == '單戀或曖昧中，求紅線' or text.lower() == '希望感情加溫'
+
     def is_going_to_war(self, event):
         text = event.message.text
         return text.lower() == '想砍掉爛桃花'
 
     def is_going_to_guanyin(self, event):
         text = event.message.text 
-        return text.lower() == '單身，求姻緣'
+        return text.lower() == '無喜歡對象，求姻緣'
        
     def is_going_to_cing(self, event):
         text = event.message.text
-        return text.lower() == '求感情復合'
+        return text.lower() == '求感情復合' or  text.lower() == '求感情修復'
         
 # enter #
 
     def on_enter_menu(self, event):
         print("I'm entering menu")
-        line_bot_api = LineBotApi(channel_access_token)
-        reply_token = event.reply_token
-        button = TemplateSendMessage(
-        alt_text='Buttons Template',
+        message = TemplateSendMessage(
+        alt_text='不支援顯示樣板，請使用手機裝置',
         template=ButtonsTemplate(
-            title='為什麼想拜月老？',
-            text='不同廟的月老有不同的專長，選擇適合你的或許能更快完成心願喔！',
-            thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuz6VkzNxBKNK8QcHZspwJP_sQOcYReWEjh603OESaHkG0mN2wEQ&s#',
-            actions=[
-                MessageTemplateAction(
-                label='單身，求姻緣',
-                text='單身，求姻緣'
-                ),
-                MessageTemplateAction(
-                label='單戀中，求紅線',
-                text='單戀中，求紅線'
-                ),
-                MessageTemplateAction(
-                label='有對象，希望感情加溫',
-                text='有對象，希望感情加溫'
-                ),
-                MessageTemplateAction(
+        thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
+        title='請選擇感情狀態',
+        text='本服務不會蒐集個人資料，請放心回答',
+        actions=[
+            MessageTemplateAction(
+                label='單身',
+                text='單身'
+            ),
+            MessageTemplateAction(
+                label='非單身',
+                text='非單身'
+            )
+        ]
+    )
+)
+        reply_token = event.reply_token
+        line_bot_api = LineBotApi(channel_access_token)
+        line_bot_api.reply_message(reply_token, message)
+        #self.go_back()
+
+    def on_enter_single(self, event):
+        print("I'm entering single")
+        message = TemplateSendMessage(
+        alt_text='不支援顯示樣板，請使用手機裝置',
+        template=ButtonsTemplate(
+        thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
+        title='對月老有什麼祈求？',
+        text='不同廟的月老有不同的專長，說出你的願望我能幫你選擇適合的月老喔！',
+        actions=[
+            MessageTemplateAction(
                 label='想砍掉爛桃花',
                 text='想砍掉爛桃花'
-                ),
-                MessageTemplateAction(
+            ),
+            MessageTemplateAction(
                 label='求感情復合',
                 text='求感情復合'
-                )
-            ]
-        )
+            ),
+            MessageTemplateAction(
+                label='無喜歡對象，求姻緣',
+                text='無喜歡對象，求姻緣'
+            ),
+            MessageTemplateAction(
+                label='單戀或曖昧中，求紅線',
+                text='單戀或曖昧中，求紅線'
+            )
+        ]
     )
-    line_bot_api.reply_message(reply_token, button)
-    #send_button_message(reply_token, button)
-        #send_text_message(reply_token, "Trigger state1")
+)
+        reply_token = event.reply_token
+        line_bot_api = LineBotApi(channel_access_token)
+        line_bot_api.reply_message(reply_token, message)
         #self.go_back()
+    
+    def on_enter_notsingle(self, event):
+        print("I'm entering notsingle")
+        message = TemplateSendMessage(
+        alt_text='不支援顯示樣板，請使用手機裝置',
+        template=ButtonsTemplate(
+        thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
+        title='對月老有什麼祈求？',
+        text='不同廟的月老有不同的專長，說出你的願望我能幫你選擇適合的月老喔！',
+        actions=[
+            MessageTemplateAction(
+                label='想砍掉爛桃花',
+                text='想砍掉爛桃花'
+            ),
+            MessageTemplateAction(
+                label='求感情修復',
+                text='求感情修復'
+            ),
+            MessageTemplateAction(
+                label='希望感情加溫',
+                text='希望感情加溫'
+            )
+        ]
+    )
+)
+        reply_token = event.reply_token
+        line_bot_api = LineBotApi(channel_access_token)
+        line_bot_api.reply_message(reply_token, message)
+        
     def on_enter_queen(self, event):
         print("I'm entering queen")
         reply_token = event.reply_token
@@ -106,144 +168,4 @@ class TocMachine(GraphMachine):
     
     def on_exit_cing(self):
         print("Leaving cing")
-        """
-import os
-
-from linebot import LineBotApi, WebhookParser
-from linebot.models import *#MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage
-
-from transitions.extensions import GraphMachine
-from utils import send_text_message
-channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
-class TocMachine(GraphMachine):
-    def __init__(self, **machine_configs):
-        self.machine = GraphMachine(model=self, **machine_configs)
-
-    def is_going_to_state1(self, event):
-        text = event.message.text
-        return text.lower() == "開始"
-
-    def is_going_to_state2(self, event):
-        text = event.message.text
-        return text.lower() == "go to state2"
-
-    def on_enter_state1(self, event):
-        print("I'm entering state1")
         
-        """message = {
-            "type": "template",
-            "altText":"不支援顯示樣板，請使用手機裝置",
-            "template":{
-                "type": "buttons",
-                #"imageAspectRatio": "rectangle",
-                #"imageSize": "contain",
-                #"thumbnailImageUrl" :"https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                #"imageBackgroundColor":"#a8e8fb",
-                "title":"為什麼想拜月老？",
-                "text":"不同廟的月老有不同的專長，選擇適合你的或許能更快完成心願喔！",
-                "actions":[
-                    {
-                        "type": "message",
-                        "label": "單身，求姻緣",
-                        "text": "單身，求姻緣"
-                    },
-                    {
-                        "type": "message",
-                        "label":"單戀中，求紅線",
-                        "text":"單戀中，求紅線"
-                    },
-                    {
-                        "type": "message",
-                        "label":"有對象，希望感情加溫",
-                        "text":"有對象，希望感情加溫"
-                    },
-                    {
-                        "type": "message",
-                        "label":"想砍掉爛桃花",
-                        "text":"想砍掉爛桃花"
-                    },
-                    {
-                        "type": "message",
-                        "label":"求感情復合",
-                        "text":"求感情復合"
-                    }
-                ]
-            }
-        }"""
-        """button = TemplateSendMessage(
-        alt_text='Buttons Template',
-        template=ButtonsTemplate(
-            title='為什麼想拜月老',#？',
-            text='不同廟的月老有不同的專長\n選擇適合你的或許能更快完成心願喔',#！',
-            #thumbnail_image_url='https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-            actions=[
-                MessageTemplateAction(
-                label="1",#'單身，求姻緣',
-                text="1"#'單身，求姻緣'
-                ),
-                MessageTemplateAction(
-                label="2",#'單戀中，求紅線',
-                text="2"#'單戀中，求紅線'
-                ),
-                MessageTemplateAction(
-                label="3",#'有對象，希望感情加溫',
-                text="3"#'有對象，希望感情加溫'
-                )
-                """"""MessageTemplateAction(
-                label="4",#'想砍掉爛桃花',
-                text="4"#'想砍掉爛桃花'
-                ),
-                MessageTemplateAction(
-                label="5",#'求感情復合',
-                text="5"#'求感情復合'
-                )
-                ]
-            )
-        )"""
-        message = TemplateSendMessage(
-    alt_text='Buttons template',
-    template=ButtonsTemplate(
-        thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
-        title='為什麼想拜月老？',
-        text='Please select',
-        actions=[
-            MessageTemplateAction(
-                label='想砍掉爛桃花',
-                text='想砍掉爛桃花'
-            ),
-            MessageTemplateAction(
-                label='求感情復合',
-                text='求感情復合'
-            ),
-            MessageTemplateAction(
-                label='單身，求姻緣',
-                text='單身，求姻緣'
-            ),
-            MessageTemplateAction(
-                label='單戀中，求紅線或有對象，為感情加溫',
-                text='單戀中，求紅線或有對象，為感情加溫'
-            )
-        ]
-    )
-)
-        message2 = TextSendMessage(text="option")
-        reply_token = event.reply_token
-        line_bot_api = LineBotApi(channel_access_token)
-        line_bot_api.reply_message(reply_token, message)
-        line_bot_api.reply_message(reply_token, message2)
-        self.go_back()
-
-    def on_exit_state1(self):
-        print("Leaving state1")
-
-    def on_enter_state2(self, event):
-        print("I'm entering state2")
-        message = TextSendMessage(text="Trigger state2")
-        reply_token = event.reply_token
-        line_bot_api = LineBotApi(channel_access_token)
-        line_bot_api.reply_message(reply_token, message)
-        #send_text_message(reply_token, "Trigger state2")
-        self.go_back()
-
-    def on_exit_state2(self):
-        print("Leaving state2")
