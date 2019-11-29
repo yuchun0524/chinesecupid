@@ -200,37 +200,25 @@ class TocMachine(GraphMachine):
                 ]
             )
         )"""
-        message = {
-  "type": "template",
-  "altText": "在不支援顯示樣板的地方顯示的文字",
-  "template": {
-    "type": "buttons",
-    "title": "更粗的標題",
-    "text": "標題文字",
-    "actions": [
-      {
-        "type": "message",
-        "label": "第一個按鈕",
-        "text": "1"
-      },
-      {
-        "type": "message",
-        "label": "第二個按鈕",
-        "text": "2"
-      },
-      {
-        "type": "message",
-        "label": "第三個按鈕",
-        "text": "3"
-      },
-      {
-        "type": "message",
-        "label": "第四個按鈕",
-        "text": "4"
-      }
-    ]
-  }
-}
+        message = TemplateSendMessage(
+    alt_text='Buttons template',
+    template=ButtonsTemplate(
+        thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
+        title='Menu',
+        text='Please select',
+        actions=[
+            PostbackTemplateAction(
+                label='postback',
+                text='postback text',
+                data='action=buy&itemid=1'
+            ),
+            MessageTemplateAction(
+                label='message',
+                text='message text'
+            )
+        ]
+    )
+)
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, message)
