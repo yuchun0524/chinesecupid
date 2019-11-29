@@ -1,7 +1,10 @@
+import os
+
+from linebot import LineBotApi, WebhookParser
 from transitions.extensions import GraphMachine
 from linebot.models import *
 from utils import send_text_message, send_button_message
-
+channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
 
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
@@ -34,6 +37,7 @@ class TocMachine(GraphMachine):
 
     def on_enter_menu(self, event):
         print("I'm entering menu")
+        line_bot_api = LineBotApi(channel_access_token)
         reply_token = event.reply_token
         button = TemplateSendMessage(
         alt_text='Buttons Template',
@@ -65,7 +69,8 @@ class TocMachine(GraphMachine):
             ]
         )
     )
-    send_button_message(reply_token, button)
+    line_bot_api.reply_message(reply_token, button)
+    #send_button_message(reply_token, button)
         #send_text_message(reply_token, "Trigger state1")
         #self.go_back()
     def on_enter_queen(self, event):
