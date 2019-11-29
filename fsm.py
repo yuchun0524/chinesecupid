@@ -129,7 +129,7 @@ class TocMachine(GraphMachine):
 
     def on_enter_state1(self, event):
         print("I'm entering state1")
-        line_bot_api = LineBotApi(channel_access_token)
+        
         """message = {
             "type": "template",
             "altText":"不支援顯示樣板，請使用手機裝置",
@@ -173,34 +173,35 @@ class TocMachine(GraphMachine):
         button = TemplateSendMessage(
         alt_text='Buttons Template',
         template=ButtonsTemplate(
-            title='為什麼想拜月老？',
-            text='不同廟的月老有不同的專長，選擇適合你的或許能更快完成心願喔！',
+            title='為什麼想拜月老',#？',
+            text='不同廟的月老有不同的專長\n選擇適合你的或許能更快完成心願喔',#！',
             thumbnail_image_url='https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
             actions=[
                 MessageTemplateAction(
-                label='單身，求姻緣',
-                text='單身，求姻緣'
+                label="1",#'單身，求姻緣',
+                text="1"#'單身，求姻緣'
                 ),
                 MessageTemplateAction(
-                label='單戀中，求紅線',
-                text='單戀中，求紅線'
+                label="2",#'單戀中，求紅線',
+                text="2"#'單戀中，求紅線'
                 ),
                 MessageTemplateAction(
-                label='有對象，希望感情加溫',
-                text='有對象，希望感情加溫'
+                label="3",#'有對象，希望感情加溫',
+                text="3"#'有對象，希望感情加溫'
                 ),
                 MessageTemplateAction(
-                label='想砍掉爛桃花',
-                text='想砍掉爛桃花'
+                label="4",#'想砍掉爛桃花',
+                text="4"#'想砍掉爛桃花'
                 ),
                 MessageTemplateAction(
-                label='求感情復合',
-                text='求感情復合'
+                label="5",#'求感情復合',
+                text="5"#'求感情復合'
                     )
                 ]
             )
         )
         reply_token = event.reply_token
+        line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, button)
         self.go_back()
 
