@@ -7,6 +7,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage
 from linebot.exceptions import LineBotApiError
+
 from fsm import TocMachine
 from utils import send_text_message
 
@@ -104,7 +105,7 @@ def callback():
         abort(400)
 
     # if event is MessageEvent and message is TextMessage, then echo text
-    """for event in events:
+    for event in events:
         if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):
@@ -117,7 +118,7 @@ def callback():
         else:
             line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text=event.message.text)
-            )"""
+            )
 
     return "OK"
 
