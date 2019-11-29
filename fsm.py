@@ -170,7 +170,7 @@ class TocMachine(GraphMachine):
                 ]
             }
         }"""
-        button = TemplateSendMessage(
+        """button = TemplateSendMessage(
         alt_text='Buttons Template',
         template=ButtonsTemplate(
             title='為什麼想拜月老',#？',
@@ -189,20 +189,51 @@ class TocMachine(GraphMachine):
                 label="3",#'有對象，希望感情加溫',
                 text="3"#'有對象，希望感情加溫'
                 )
-                """MessageTemplateAction(
+                """"""MessageTemplateAction(
                 label="4",#'想砍掉爛桃花',
                 text="4"#'想砍掉爛桃花'
                 ),
                 MessageTemplateAction(
                 label="5",#'求感情復合',
                 text="5"#'求感情復合'
-                )"""
+                )
                 ]
             )
-        )
+        )"""
+        message = {
+  "type": "template",
+  "altText": "在不支援顯示樣板的地方顯示的文字",
+  "template": {
+    "type": "buttons",
+    "title": "更粗的標題",
+    "text": "標題文字",
+    "actions": [
+      {
+        "type": "message",
+        "label": "第一個按鈕",
+        "text": "1"
+      },
+      {
+        "type": "message",
+        "label": "第二個按鈕",
+        "text": "2"
+      },
+      {
+        "type": "message",
+        "label": "第三個按鈕",
+        "text": "3"
+      },
+      {
+        "type": "message",
+        "label": "第四個按鈕",
+        "text": "4"
+      }
+    ]
+  }
+}
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
-        line_bot_api.reply_message(reply_token, button)
+        line_bot_api.reply_message(reply_token, message)
         self.go_back()
 
     def on_exit_state1(self):
