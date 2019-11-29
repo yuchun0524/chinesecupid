@@ -129,10 +129,10 @@ class TocMachine(GraphMachine):
             "altText":"不支援顯示樣板，請使用手機裝置",
             "template":{
                 "type": "buttons",
-                "imageAspectRatio": "rectangle",
-                "imageSize": "contain",
-                "thumbnailImageUrl" :"https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                "imageBackgroundColor":"#a8e8fb",
+                #"imageAspectRatio": "rectangle",
+                #"imageSize": "contain",
+                #"thumbnailImageUrl" :"https://images.unsplash.com/photo-1572557985266-d1830173ebbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                #"imageBackgroundColor":"#a8e8fb",
                 "title":"為什麼想拜月老？",
                 "text":"不同廟的月老有不同的專長，選擇適合你的或許能更快完成心願喔！",
                 "actions":[
