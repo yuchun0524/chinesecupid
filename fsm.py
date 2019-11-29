@@ -188,15 +188,15 @@ class TocMachine(GraphMachine):
                 MessageTemplateAction(
                 label="3",#'有對象，希望感情加溫',
                 text="3"#'有對象，希望感情加溫'
-                ),
-                MessageTemplateAction(
+                )
+                """MessageTemplateAction(
                 label="4",#'想砍掉爛桃花',
                 text="4"#'想砍掉爛桃花'
                 ),
                 MessageTemplateAction(
                 label="5",#'求感情復合',
                 text="5"#'求感情復合'
-                )
+                )"""
                 ]
             )
         )
