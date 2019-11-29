@@ -44,7 +44,7 @@ class TocMachine(GraphMachine):
         template=ButtonsTemplate(
             title='為什麼想拜月老？',
             text='不同廟的月老有不同的專長，選擇適合你的或許能更快完成心願喔！',
-            thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuz6VkzNxBKNK8QcHZspwJP_sQOcYReWEjh603OESaHkG0mN2wEQ&s',
+            thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuz6VkzNxBKNK8QcHZspwJP_sQOcYReWEjh603OESaHkG0mN2wEQ&s#',
             actions=[
                 MessageTemplateAction(
                 label='單身，求姻緣',
@@ -118,7 +118,7 @@ class TocMachine(GraphMachine):
 
     def is_going_to_state1(self, event):
         text = event.message.text
-        return text.lower() == "go to state1"
+        return text.lower() == "開始"
 
     def is_going_to_state2(self, event):
         text = event.message.text
