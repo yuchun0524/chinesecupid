@@ -134,11 +134,15 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, message)
-        
+
     def on_enter_queen(self, event):
         print("I'm entering queen")
+        message = TextSendMessage(text="Trigger queen")
+        message2 = TextSendMessage(text="queen")
         reply_token = event.reply_token
-        send_text_message(reply_token, "queen")
+        line_bot_api = LineBotApi(channel_access_token)
+        line_bot_api.reply_message(reply_token, [message, message2])
+        #send_text_message(reply_token, "Trigger state2")
         self.go_back()
     def on_enter_war(self, event):
         print("I'm entering war")
