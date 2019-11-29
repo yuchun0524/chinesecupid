@@ -204,12 +204,16 @@ class TocMachine(GraphMachine):
     alt_text='Buttons template',
     template=ButtonsTemplate(
         thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
-        title='Menu',
+        title='為什麼想拜月老？',
         text='Please select',
         actions=[
             MessageTemplateAction(
-                label='message',
-                text='message text'
+                label='想砍掉爛桃花',
+                text='想砍掉爛桃花'
+            ),
+            MessageTemplateAction(
+                label='求感情復合',
+                text='求感情復合'
             ),
             MessageTemplateAction(
                 label='單身，求姻緣',
