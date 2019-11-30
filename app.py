@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage
+from linebot.models import * #MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
@@ -21,7 +21,12 @@ machine = TocMachine(
         "queen",
         "war",
         "guanyin",
-        "cing"
+        "cing",
+        "location",
+        "time",
+        "phone",
+        "draw",
+        "notice"
     ],
     transitions=[
         {
@@ -44,7 +49,7 @@ machine = TocMachine(
         },
         {
             "trigger": "advance",
-            "source": ["single", "notsingle"],
+            "source": ["single", "notsingle", "location", "time", "phone", "draw", "notice"],
             "dest": "queen",
             "conditions": "is_going_to_queen",
         },
@@ -67,14 +72,45 @@ machine = TocMachine(
             "conditions": "is_going_to_cing",
         },
         {
-            "trigger": "go_back",
+            "trigger": "advance",
+            "source": "queen",
+            "dest": "location",
+            "conditions": "is_going_to_location",
+        },
+        {
+            "trigger": "advance",
+            "source": "queen",
+            "dest": "time",
+            "conditions": "is_going_to_time",
+        },
+        {
+            "trigger": "advance",
+            "source": "queen",
+            "dest": "phone",
+            "conditions": "is_going_to_phone",
+        },
+        {
+            "trigger": "advance",
+            "source": "queen",
+            "dest": "draw",
+            "conditions": "is_going_to_draw",
+        },
+        {
+            "trigger": "advance",
+            "source": "queen",
+            "dest": "notice",
+            "conditions": "is_going_to_notice",
+        },
+        {
+            "trigger": "advance",
             "source": [
                 "queen", 
                 "war",
                 "guanyin",
                 "cing"
             ], 
-            "dest": "menu"
+            "dest": "menu",
+            "conditions": "is_going_to_menu",
         }
     ],
     initial="user",
@@ -148,11 +184,11 @@ def webhook_handler():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
-        if not isinstance(event, MessageEvent):
+        if not isinstance(event, MessageEvent) and not isinstance(event, PostbackEvent):
             continue
-        if not isinstance(event.message, TextMessage):
+        if isinstance(event, MessageEvent) and (not isinstance(event.message, TextMessage)):
             continue
-        if not isinstance(event.message.text, str):
+        if isinstance(event, MessageEvent) and (not isinstance(event.message.text, str)):
             continue
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
