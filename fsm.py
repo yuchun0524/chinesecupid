@@ -18,14 +18,15 @@ class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 # is going to #
+    def is_going_to_user(self, event):
+        if event.type == 'postback':
+            text = event.postback.data
+            return text.lower() == "return"
 
     def is_going_to_menu(self, event):
         if event.type == 'message':
             text = event.message.text
             return text.lower() == "開始"
-        elif event.type == 'postback':
-            text = event.postback.data
-            return text.lower() == "return"
 
     def is_going_to_single(self, event):
         if event.type == 'message':
@@ -91,7 +92,12 @@ class TocMachine(GraphMachine):
         return text.lower() == "queen_notice" or text.lower() == "war_notice" or text.lower() == "guanyin_notice" or text.lower() == "cing_notice"
 
 # enter #
-
+    def on_enter_user(self, event):
+        print("I'm entering user")
+        message = TextSendMessage(text = '歡迎使用本服務\n想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請輸入開始以便使用本服務。\n溫馨小提醒：沒有規定一定要拜某一間廟的月老，以下提供的資訊只是幫助你更快做出選擇。')
+        reply_token = event.reply_token
+        line_bot_api = LineBotApi(channel_access_token)
+        line_bot_api.reply_message(reply_token, message)
     def on_enter_menu(self, event):
         print("I'm entering menu")
         message = TemplateSendMessage(
@@ -99,7 +105,7 @@ class TocMachine(GraphMachine):
         template=ButtonsTemplate(
         thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
         title='請選擇感情狀態',
-        text='本服務不會蒐集個人資料，請放心回答',
+        text='以下問題只是要方便幫助你做出選擇，不會蒐集個人資料，請放心回答。',
         actions=[
             PostbackAction(
                 label='單身',
@@ -155,6 +161,7 @@ class TocMachine(GraphMachine):
         message = TemplateSendMessage(
         alt_text='不支援顯示樣板，請使用手機裝置',
         template=ButtonsTemplate(
+        #thumbnail_image_url='https://blog.accupass.com/wp-content/uploads/2017/08/000000000002-768x516.jpg',
         thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
         title='對月老有什麼祈求？',
         text='不同廟的月老有不同的專長，說出你的願望我能幫你選擇適合的月老喔！',
@@ -186,6 +193,7 @@ class TocMachine(GraphMachine):
         columns=[
             CarouselColumn(
                 #thumbnail_image_url='顯示在開頭的大圖片網址',
+                thumbnail_image_url='https://2.bp.blogspot.com/-MBB02c7m240/W12Y6Yk7RiI/AAAAAAAACkY/X3SS1KsgYUE7oNKHG3hPtZ8y5oafpuwkQCLcBGAs/s1600/%25E5%25A4%25A7%25E5%25A4%25A9%25E5%2590%258E%25E5%25AE%25AE.png',
                 title='大天后宮',
                 text='你適合的是大天后宮，它是國定一級古蹟，起源於明鄭時期，目前是台灣規模數一數二的媽祖廟。',
                 actions=[
@@ -204,7 +212,8 @@ class TocMachine(GraphMachine):
                 ]
             ),
             CarouselColumn(
-                #thumbnail_image_url='https://blog.accupass.com/wp-content/uploads/2017/08/000000000002-768x516.jpg',
+                thumbnail_image_url='https://blog.accupass.com/wp-content/uploads/2017/08/000000000002-768x516.jpg',
+                #thumbnail_image_url='https://2.bp.blogspot.com/-MBB02c7m240/W12Y6Yk7RiI/AAAAAAAACkY/X3SS1KsgYUE7oNKHG3hPtZ8y5oafpuwkQCLcBGAs/s1600/%25E5%25A4%25A7%25E5%25A4%25A9%25E5%2590%258E%25E5%25AE%25AE.png',
                 title='大天后宮',
                 text='本廟月老的專長是為愛情加溫和牽紅線，如果有明確對象，可以到大天后宮求月老紅線。',
                 actions=[
@@ -235,7 +244,8 @@ class TocMachine(GraphMachine):
         template=CarouselTemplate(
         columns=[
             CarouselColumn(
-                #thumbnail_image_url='顯示在開頭的大圖片網址',
+                #thumbnail_image_url='https://blog.accupass.com/wp-content/uploads/2017/08/e14db151308ad410ad859e6545a8d0f5.jpg',
+                thumbnail_image_url='https://scontent.fkhh1-2.fna.fbcdn.net/v/t31.0-8/859031_1099317400081235_8660042414913866148_o.jpg?_nc_cat=109&_nc_ohc=oCTAlch7OWwAQmXNpErna_bxzlgLKa-lMxDU-G37vfvEudliENCNFOwZw&_nc_ht=scontent.fkhh1-2.fna&oh=8592fbad55c4a08e7340967498061326&oe=5E715B0A',
                 title='祀典武廟',
                 text='你適合的是祀典武廟，它是國家一級古蹟，起源於明鄭時期，主要奉祀關聖帝君。',
                 actions=[
@@ -254,7 +264,7 @@ class TocMachine(GraphMachine):
                 ]
             ),
             CarouselColumn(
-                #thumbnail_image_url='顯示在開頭的大圖片網址',
+                thumbnail_image_url='https://blog.accupass.com/wp-content/uploads/2017/08/e14db151308ad410ad859e6545a8d0f5.jpg',
                 title='祀典武廟',
                 text='這裡的「拐杖月老」擅長斬爛桃花，或者遇到糾纏不清的舊情人也可以來拜。',
                 actions=[
@@ -283,9 +293,10 @@ class TocMachine(GraphMachine):
         Carousel= TemplateSendMessage(
         alt_text='不支援顯示樣板，請使用手機裝置',
         template=CarouselTemplate(
+            image_size="contain",
         columns=[
             CarouselColumn(
-                #thumbnail_image_url='顯示在開頭的大圖片網址',
+                thumbnail_image_url='https://www.taiwan66.com.tw/uploads/panoramas/434/photos/201102111055123.jpg',
                 title='大觀音亭',
                 text='你適合的是大觀音亭，它屬於市定古蹟，起於荷治明鄭時期，主祀觀世菩薩。',
                 actions=[
@@ -304,7 +315,7 @@ class TocMachine(GraphMachine):
                 ]
             ),
             CarouselColumn(
-                #thumbnail_image_url='顯示在開頭的大圖片網址',
+                thumbnail_image_url='https://www.taiwan66.com.tw/uploads/panoramas/434/photos/201102111053224.jpg',
                 title='大觀音亭',
                 text='大觀音亭的說媒月老耳厚、嘴闊，專長是說媒牽紅線。',
                 actions=[
@@ -354,7 +365,7 @@ class TocMachine(GraphMachine):
                 ]
             ),
             CarouselColumn(
-                thumbnail_image_url='https://icrvb3jy.xinmedia.com/solomo/article/170289/FBBE31B3-8458-B120-BABB-DC637E48047F.jpeg',
+                thumbnail_image_url='https://blog.accupass.com/wp-content/uploads/2017/08/3795011809_a8342a744b_z.jpg',
                 title='重慶寺',
                 text='寺內的「醋矸」乃一大特色，該寺月老也以此聞名，這裡的月老擅長挽回變調的感情。',
                 actions=[

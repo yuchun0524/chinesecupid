@@ -109,8 +109,18 @@ machine = TocMachine(
                 "guanyin",
                 "cing"
             ], 
-            "dest": "menu",
-            "conditions": "is_going_to_menu",
+            "dest": "user",
+            "conditions": "is_going_to_user",
+        },
+        {
+            "trigger": "go_back",
+            "source": [
+                "queen", 
+                "war",
+                "guanyin",
+                "cing"
+            ], 
+            "dest": "user"
         }
     ],
     initial="user",
