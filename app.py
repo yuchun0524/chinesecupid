@@ -49,25 +49,25 @@ machine = TocMachine(
         },
         {
             "trigger": "advance",
-            "source": ["single", "notsingle", "location", "time", "phone", "draw", "notice"],
+            "source": ["single", "notsingle"],
             "dest": "queen",
             "conditions": "is_going_to_queen",
         },
         {
             "trigger": "advance",
-            "source": ["single", "notsingle", "location", "time", "phone", "draw", "notice"],
+            "source": ["single", "notsingle"],
             "dest": "war",
             "conditions": "is_going_to_war",
         },
         {
             "trigger": "advance",
-            "source": ["single", "location", "time", "phone", "draw", "notice"],
+            "source": "single",
             "dest": "guanyin",
             "conditions": "is_going_to_guanyin",
         },
         {
             "trigger": "advance",
-            "source": ["single", "notsingle", "location", "time", "phone", "draw", "notice"],
+            "source": ["single", "notsingle"],
             "dest": "cing",
             "conditions": "is_going_to_cing",
         },
@@ -103,25 +103,39 @@ machine = TocMachine(
         },
         {
             "trigger": "advance",
-            "source": [
-                "queen", 
-                "war",
-                "guanyin",
-                "cing"
-            ], 
+            "source":["location", "time", "phone", "draw", "notice"],
+            "dest": "queen",
+            "conditions": "back_to_queen",
+        },
+        {
+            "trigger": "advance",
+            "source": ["location", "time", "phone", "draw", "notice"],
+            "dest": "war",
+            "conditions": "back_to_war",
+        },
+        {
+            "trigger": "advance",
+            "source": ["location", "time", "phone", "draw", "notice"],
+            "dest": "guanyin",
+            "conditions": "back_to_guanyin",
+        },
+        {
+            "trigger": "advance",
+            "source": ["location", "time", "phone", "draw", "notice"],
+            "dest": "cing",
+            "conditions": "back_to_cing",
+        },
+        {
+            "trigger": "advance",
+            "source": ["queen", "war", "guanyin", "cing"], 
             "dest": "user",
-            "conditions": "is_going_to_user",
+            "conditions": "back_to_user",
         },
         {
             "trigger": "go_back",
-            "source": [
-                "queen", 
-                "war",
-                "guanyin",
-                "cing"
-            ], 
+            "source": ["queen", "war", "guanyin", "cing"], 
             "dest": "user"
-        }
+        },
     ],
     initial="user",
     auto_transitions=False,
@@ -204,7 +218,7 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
-            send_text_message(event.reply_token, "不好意思，我不懂你的意思。")
+            send_text_message(event.reply_token, "我去幫忙月老啦！請你再試試看別的選項。")
 
     return "OK"
 

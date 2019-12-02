@@ -5,20 +5,12 @@ from transitions.extensions import GraphMachine
 from linebot.models import *
 from utils import send_text_message
 channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
-"""
-文字訊息傳遞範例
-message = TextSendMessage(text="Trigger state2")
-        reply_token = event.reply_token
-        line_bot_api = LineBotApi(channel_access_token)
-        line_bot_api.reply_message(reply_token, message)
-        #send_text_message(reply_token, "Trigger state2")
-        self.go_back()
-"""
+
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 # is going to #
-    def is_going_to_user(self, event):
+    def back_to_user(self, event):
         if event.type == 'postback':
             text = event.postback.data
             return text.lower() == "return"
@@ -26,7 +18,7 @@ class TocMachine(GraphMachine):
     def is_going_to_menu(self, event):
         if event.type == 'message':
             text = event.message.text
-            return text.lower() == "開始"
+            return text.lower() == "我要問事"
 
     def is_going_to_single(self, event):
         if event.type == 'message':
@@ -50,7 +42,27 @@ class TocMachine(GraphMachine):
             return text.lower() == '單戀或曖昧中，求紅線' or text.lower() == '希望感情加溫'
         elif event.type == 'postback':
             text = event.postback.data
-            return text.lower() == "lovesomeone" or text.lower() == "warm" or text.lower() == "queen_return"
+            return text.lower() == "lovesomeone" or text.lower() == "warm" 
+
+    def back_to_queen(self, event):
+        if event.type == 'postback':
+            text = event.postback.data
+            return text.lower() == "queen_return"
+
+    def back_to_war(self, event):
+        if event.type == 'postback':
+            text = event.postback.data
+            return text.lower() == "war_return"
+    
+    def back_to_guanyin(self, event):
+        if event.type == 'postback':
+            text = event.postback.data
+            return text.lower() == "guanyin_return"
+
+    def back_to_cing(self, event):
+        if event.type == 'postback':
+            text = event.postback.data
+            return text.lower() == "cing_return"  
 
     def is_going_to_war(self, event):
         if event.type == 'message':
@@ -58,7 +70,7 @@ class TocMachine(GraphMachine):
             return text.lower() == '想砍掉爛桃花'
         elif event.type == 'postback':
             text = event.postback.data
-            return text.lower() == "bad" or text.lower() == "war_return" 
+            return text.lower() == "bad"
 
     def is_going_to_guanyin(self, event):
         if event.type == 'message':
@@ -66,7 +78,7 @@ class TocMachine(GraphMachine):
             return text.lower() == '無喜歡對象，求姻緣'
         elif event.type == 'postback':
             text = event.postback.data
-            return text.lower() == "none" or text.lower() == "guanyin_return"
+            return text.lower() == "none" 
        
     def is_going_to_cing(self, event):
         if event.type == 'message':
@@ -74,19 +86,24 @@ class TocMachine(GraphMachine):
             return text.lower() == '求感情復合' or  text.lower() == '求感情修復'
         elif event.type == 'postback':
             text = event.postback.data
-            return text.lower() == "again" or text.lower() == "fix" or text.lower() == "cing_return"
+            return text.lower() == "again" or text.lower() == "fix"
+
     def is_going_to_location(self, event):
         text = event.postback.data
         return text.lower() == "queen_location" or text.lower() == "war_location" or text.lower() == "guanyin_location" or text.lower() == "cing_location"
+    
     def is_going_to_time(self, event):
         text = event.postback.data
         return text.lower() == "queen_time" or text.lower() == "war_time" or text.lower() == "guanyin_time" or text.lower() == "cing_time"
+    
     def is_going_to_phone(self, event):
         text = event.postback.data
         return text.lower() == "queen_phone" or text.lower() == "war_phone" or text.lower() == "guanyin_phone" or text.lower() == "cing_phone"
+    
     def is_going_to_draw(self, event):
         text = event.postback.data
         return text.lower() == "queen_draw" or text.lower() == "war_draw" or text.lower() == "guanyin_draw" or text.lower() == "cing_draw"
+    
     def is_going_to_notice(self, event):
         text = event.postback.data
         return text.lower() == "queen_notice" or text.lower() == "war_notice" or text.lower() == "guanyin_notice" or text.lower() == "cing_notice"
@@ -94,7 +111,7 @@ class TocMachine(GraphMachine):
 # enter #
     def on_enter_user(self, event):
         print("I'm entering user")
-        message = TextSendMessage(text = '歡迎使用本服務\n想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請輸入開始以便使用本服務。\n溫馨小提醒：沒有規定一定要拜某一間廟的月老，以下提供的資訊只是幫助你更快做出選擇。')
+        message = TextSendMessage(text = '歡迎繼續使用本服務\n想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請輸入「我要問事」以便使用本服務。\n\n溫馨小提醒：以下提供的資訊只是幫助你能夠更快做出選擇。')
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, message)
@@ -105,7 +122,7 @@ class TocMachine(GraphMachine):
         template=ButtonsTemplate(
         thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
         title='請選擇感情狀態',
-        text='以下問題只是要方便幫助你做出選擇，不會蒐集個人資料，請放心回答。',
+        text='沒有一言難盡的選項喔！',
         actions=[
             PostbackAction(
                 label='單身',
@@ -226,7 +243,7 @@ class TocMachine(GraphMachine):
                         data='queen_notice'
                     ),
                     PostbackAction(
-                        label='返回',
+                        label='返回首頁',
                         data='return'
                     )
                 ]
@@ -237,6 +254,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, Carousel)
+
     def on_enter_war(self, event):
         print("I'm entering war")
         Carousel= TemplateSendMessage(
@@ -277,7 +295,7 @@ class TocMachine(GraphMachine):
                         data='war_notice'
                     ),
                     PostbackAction(
-                        label='返回',
+                        label='返回首頁',
                         data='return'
                     )
                 ]
@@ -288,6 +306,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, Carousel)
+
     def on_enter_guanyin(self, event):
         print("I'm entering guanyin")
         Carousel= TemplateSendMessage(
@@ -328,7 +347,7 @@ class TocMachine(GraphMachine):
                         data='guanyin_notice'
                     ),
                     PostbackAction(
-                        label='返回',
+                        label='返回首頁',
                         data='return'
                     )
                 ]
@@ -339,6 +358,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, Carousel)
+
     def on_enter_cing(self, event):
         print("I'm entering cing")
         Carousel= TemplateSendMessage(
@@ -378,7 +398,7 @@ class TocMachine(GraphMachine):
                         data='cing_notice'
                     ),
                     PostbackAction(
-                        label='返回',
+                        label='返回首頁',
                         data='return'
                     )
                 ]
@@ -389,6 +409,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, Carousel)
+
     def on_enter_location(self, event):
         print("I'm entering location")
         if event.postback.data == "queen_location":
@@ -398,14 +419,15 @@ class TocMachine(GraphMachine):
                 latitude=22.996434,
                 longitude=120.201710
             )
+            #message = TextSendMessage(text = '返回大天后宮')
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大天后宮主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大天后宮主選單',
                             data='queen_return'
                         )
                     ]
@@ -421,11 +443,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看祀典武廟主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回祀典武廟主選單',
                             data='war_return'
                         )
                     ]
@@ -441,11 +463,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大觀音亭主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大觀音亭主選單',
                             data='guanyin_return'
                         )
                     ]
@@ -461,11 +483,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看重慶寺主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回重慶寺主選單',
                             data='cing_return'
                         )
                     ]
@@ -473,9 +495,11 @@ class TocMachine(GraphMachine):
             )
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
+        
         """line_bot_api.push_message('U06538a5ba60fdf5d470b458296993e3d', location)
         line_bot_api.reply_message(reply_token, button)"""
         line_bot_api.reply_message(reply_token, [location,button])
+        #line_bot_api.push_message('U06538a5ba60fdf5d470b458296993e3d', message, notification_disabled=True)
     def on_enter_time(self, event):
         print("I'm entering time")
         if event.postback.data == "queen_time":
@@ -483,11 +507,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大天后宮主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大天后宮主選單',
                             data='queen_return'
                         )
                     ]
@@ -498,11 +522,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看祀典武廟主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回祀典武廟主選單',
                             data='war_return'
                         )
                     ]
@@ -513,11 +537,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大觀音亭主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大觀音亭主選單',
                             data='guanyin_return'
                         )
                     ]
@@ -528,11 +552,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看重慶寺主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回重慶寺主選單',
                             data='cing_return'
                         )
                     ]
@@ -541,6 +565,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, [message, button])
+
     def on_enter_phone(self, event):
         print("I'm entering phone")
         if event.postback.data == "queen_phone":
@@ -548,11 +573,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大天后宮主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大天后宮主選單',
                             data='queen_return'
                         )
                     ]
@@ -563,11 +588,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看祀典武廟主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回祀典武廟主選單',
                             data='war_return'
                         )
                     ]
@@ -578,11 +603,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大觀音亭主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大觀音亭主選單',
                             data='guanyin_return'
                         )
                     ]
@@ -593,11 +618,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看重慶寺主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回重慶寺主選單',
                             data='cing_return'
                         )
                     ]
@@ -606,6 +631,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, [message, button])   
+
     def on_enter_draw(self, event):
         print("I'm entering draw")
         if event.postback.data == "queen_draw":
@@ -613,11 +639,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大天后宮主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大天后宮主選單',
                             data='queen_return'
                         )
                     ]
@@ -628,11 +654,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看祀典武廟主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回祀典武廟主選單',
                             data='war_return'
                         )
                     ]
@@ -643,11 +669,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大觀音亭主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大觀音亭主選單',
                             data='guanyin_return'
                         )
                     ]
@@ -658,11 +684,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看重慶寺主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回重慶寺主選單',
                             data='cing_return'
                         )
                     ]
@@ -671,33 +697,19 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, [message, button]) 
+
     def on_enter_notice(self, event):
         print("I'm entering notice")
-        if event.postback.data == "queen_notice":
-            message = TextSendMessage(text = '注意事項：\n1、在寺廟中要先拜主神再拜月老。\n2、多處廟方人員表示，求紅線建議只求一家，請自行斟酌。\n3、月老只是協助，重點還是在個人造化。')
-            button = TemplateSendMessage(
-                alt_text='不支援顯示樣板，請使用手機裝置',
-                template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
-                    actions=[
-                        PostbackAction(
-                            label='返回',
-                            data='queen_return'
-                        )
-                    ]
-                )
-            )
         if event.postback.data == "queen_notice":
             message = TextSendMessage(text = '注意事項：\n1、在寺廟中要先拜主神再拜月老。\n2、多處廟方人員表示，拜月老都可以拜，但求月老只能求一家，請自行斟酌。\n3、月老只是協助，重點還是在個人造化。')
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大天后宮主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大天后宮主選單',
                             data='queen_return'
                         )
                     ]
@@ -708,11 +720,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看祀典武廟主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回祀典武廟主選單',
                             data='war_return'
                         )
                     ]
@@ -723,11 +735,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看大觀音亭主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回大觀音亭主選單',
                             data='guanyin_return'
                         )
                     ]
@@ -738,11 +750,11 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊返回即可查看更多資訊',
-                    text='可返回原先介面',
+                    title='點擊下方按鈕',
+                    text='點擊按鈕可查看重慶寺主選單',
                     actions=[
                         PostbackAction(
-                            label='返回',
+                            label='返回重慶寺主選單',
                             data='cing_return'
                         )
                     ]
@@ -753,6 +765,17 @@ class TocMachine(GraphMachine):
         line_bot_api.reply_message(reply_token, [message, button]) 
     
 # exit #
+    def on_exit_user(self, event):
+        print("Leaving user")
+
+    def on_exit_menu(self, event):
+        print("Leaving menu")
+
+    def on_exit_single(self, event):
+        print("Leaving single")
+
+    def on_exit_notsingle(self, event):
+        print("Leaving notsingle")
 
     def on_exit_queen(self, event):
         print("Leaving queen")
@@ -760,7 +783,7 @@ class TocMachine(GraphMachine):
     def on_exit_war(self, event):
         print("Leaving war")
     
-    def on_exit_guantin(self, event):
+    def on_exit_guanyin(self, event):
         print("Leaving guanyin")
     
     def on_exit_cing(self, event):
