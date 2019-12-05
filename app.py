@@ -131,11 +131,6 @@ machine = TocMachine(
             "dest": "user",
             "conditions": "back_to_user",
         },
-        {
-            "trigger": "go_back",
-            "source": ["queen", "war", "guanyin", "cing"], 
-            "dest": "user"
-        },
     ],
     initial="user",
     auto_transitions=False,
@@ -208,6 +203,22 @@ def webhook_handler():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
+        if isinstance(event, FollowEvent):
+            message = TextSendMessage(text = '歡迎使用本服務~~\n想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請點選「我要問事」以便使用本服務。\n溫馨小提醒：沒有規定一定要拜某一間廟的月老，以下提供的資訊只是幫助你更快做出選擇。')
+            button = TemplateSendMessage(
+                alt_text='不支援顯示樣板，請使用手機裝置',
+                template=ButtonsTemplate(
+                    text='點擊下方按鈕即可開始使用',
+                    actions=[
+                        MessageAction(
+                            label='我要問事',
+                            text='我要問事'
+                        )
+                    ]
+                )
+            )
+            reply_token = event.reply_token
+            line_bot_api.reply_message(reply_token, [message, button])
         if not isinstance(event, MessageEvent) and not isinstance(event, PostbackEvent):
             continue
         if isinstance(event, MessageEvent) and (not isinstance(event.message, TextMessage)):
@@ -218,7 +229,7 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
-            send_text_message(event.reply_token, "我去幫忙月老啦！請你再試試看別的選項。")
+            send_text_message(event.reply_token, "我去幫忙月老啦！請你再試試看別的選項。要不要試試按返回什麼主選單呢？\n小提示：在廟宇選單內按下返回首頁可以回到一開始的歡迎訊息喔！")
 
     return "OK"
 

@@ -111,10 +111,22 @@ class TocMachine(GraphMachine):
 # enter #
     def on_enter_user(self, event):
         print("I'm entering user")
-        message = TextSendMessage(text = '歡迎繼續使用本服務\n想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請輸入「我要問事」以便使用本服務。\n\n溫馨小提醒：以下提供的資訊只是幫助你能夠更快做出選擇。')
+        message = TextSendMessage(text = '歡迎繼續使用本服務~~\n想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請點選「我要問事」以便使用本服務。\n\n溫馨小提醒：以下提供的資訊只是幫助你能夠更快做出選擇。')
+        button = TemplateSendMessage(
+                alt_text='不支援顯示樣板，請使用手機裝置',
+                template=ButtonsTemplate(
+                    text='點擊下方按鈕即可開始使用',
+                    actions=[
+                        MessageAction(
+                            label='我要問事',
+                            text='我要問事'
+                        )
+                    ]
+                )
+            )
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
-        line_bot_api.reply_message(reply_token, message)
+        line_bot_api.reply_message(reply_token, [message, button])
     def on_enter_menu(self, event):
         print("I'm entering menu")
         message = TemplateSendMessage(
@@ -423,8 +435,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大天后宮主選單',
+                    text='點擊下方按鈕可繼續看大天后宮主選單',
                     actions=[
                         PostbackAction(
                             label='返回大天后宮主選單',
@@ -443,8 +454,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看祀典武廟主選單',
+                    text='點擊下方按鈕可繼續看祀典武廟主選單',
                     actions=[
                         PostbackAction(
                             label='返回祀典武廟主選單',
@@ -463,8 +473,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大觀音亭主選單',
+                    text='點擊下方按鈕可繼續看大觀音亭主選單',
                     actions=[
                         PostbackAction(
                             label='返回大觀音亭主選單',
@@ -483,8 +492,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看重慶寺主選單',
+                    text='點擊下方按鈕可繼續看重慶寺主選單',
                     actions=[
                         PostbackAction(
                             label='返回重慶寺主選單',
@@ -507,8 +515,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大天后宮主選單',
+                    text='點擊下方按鈕可繼續看大天后宮主選單',
                     actions=[
                         PostbackAction(
                             label='返回大天后宮主選單',
@@ -522,8 +529,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看祀典武廟主選單',
+                    text='點擊下方按鈕可繼續看祀典武廟主選單',
                     actions=[
                         PostbackAction(
                             label='返回祀典武廟主選單',
@@ -537,8 +543,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大觀音亭主選單',
+                    text='點擊下方按鈕可繼續看大觀音亭主選單',
                     actions=[
                         PostbackAction(
                             label='返回大觀音亭主選單',
@@ -552,8 +557,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看重慶寺主選單',
+                    text='點擊下方按鈕可繼續看重慶寺主選單',
                     actions=[
                         PostbackAction(
                             label='返回重慶寺主選單',
@@ -573,8 +577,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大天后宮主選單',
+                    text='點擊下方按鈕可繼續看大天后宮主選單',
                     actions=[
                         PostbackAction(
                             label='返回大天后宮主選單',
@@ -588,8 +591,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看祀典武廟主選單',
+                    text='點擊下方按鈕可繼續看祀典武廟主選單',
                     actions=[
                         PostbackAction(
                             label='返回祀典武廟主選單',
@@ -603,8 +605,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大觀音亭主選單',
+                    text='點擊下方按鈕可繼續看大觀音亭主選單',
                     actions=[
                         PostbackAction(
                             label='返回大觀音亭主選單',
@@ -618,8 +619,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看重慶寺主選單',
+                    text='點擊下方按鈕可繼續看重慶寺主選單',
                     actions=[
                         PostbackAction(
                             label='返回重慶寺主選單',
@@ -639,8 +639,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大天后宮主選單',
+                    text='點擊下方按鈕可繼續看大天后宮主選單',
                     actions=[
                         PostbackAction(
                             label='返回大天后宮主選單',
@@ -654,8 +653,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看祀典武廟主選單',
+                    text='點擊下方按鈕可繼續看祀典武廟主選單',
                     actions=[
                         PostbackAction(
                             label='返回祀典武廟主選單',
@@ -669,8 +667,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大觀音亭主選單',
+                    text='點擊下方按鈕可繼續看大觀音亭主選單',
                     actions=[
                         PostbackAction(
                             label='返回大觀音亭主選單',
@@ -684,8 +681,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看重慶寺主選單',
+                    text='點擊下方按鈕可繼續看重慶寺主選單',
                     actions=[
                         PostbackAction(
                             label='返回重慶寺主選單',
@@ -705,8 +701,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大天后宮主選單',
+                    text='點擊下方按鈕可繼續看大天后宮主選單',
                     actions=[
                         PostbackAction(
                             label='返回大天后宮主選單',
@@ -720,8 +715,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看祀典武廟主選單',
+                    text='點擊下方按鈕可繼續看祀典武廟主選單',
                     actions=[
                         PostbackAction(
                             label='返回祀典武廟主選單',
@@ -735,8 +729,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看大觀音亭主選單',
+                    text='點擊下方按鈕可繼續看大觀音亭主選單',
                     actions=[
                         PostbackAction(
                             label='返回大觀音亭主選單',
@@ -750,8 +743,7 @@ class TocMachine(GraphMachine):
             button = TemplateSendMessage(
                 alt_text='不支援顯示樣板，請使用手機裝置',
                 template=ButtonsTemplate(
-                    title='點擊下方按鈕',
-                    text='點擊按鈕可查看重慶寺主選單',
+                    text='點擊下方按鈕可繼續看重慶寺主選單',
                     actions=[
                         PostbackAction(
                             label='返回重慶寺主選單',
