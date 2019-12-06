@@ -54,7 +54,7 @@ brew cask install ngrok
 **`ngrok` would be used in the following instruction**
 
 ```sh
-ngrok http 8000
+./ngrok http 8000
 ```
 
 After that, `ngrok` would generate a https URL.
@@ -80,11 +80,13 @@ The initial state is set to `user`.
 
 點選按鈕之後會進入`menu`state，根據選項不同會分別進入`single`和`notsingle`state
 
-`single`和`notsingle`state會根據選項不同分別進入`queen`.`war`.`guanyin`和`cing`state
+`single`和`notsingle`state會根據選項不同分別進入`queen`、`war`、`guanyin`和`cing`state
 
 這四個state代表不同廟宇，分別是大天后宮、祀典武廟、大觀音亭和重慶寺
 
-分別進入這四個state之後會出現不同的選單，可查看廟宇相關資訊，其中`返回首頁`按鈕會回到一開始的`user`state
+分別進入這四個state之後會出現不同的選單，可查看廟宇相關資訊，相關資訊有`位置`、`開放時間`、`聯絡方式`、`流程`和`注意事項`
+
+另外有在廟宇主選單設置`返回首頁`按鈕，按下即可回到一開始的`user`state，會呈現歡迎繼續使用的訊息
 
 Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
 
