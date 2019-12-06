@@ -183,7 +183,6 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         line_bot_api = LineBotApi(channel_access_token)
         line_bot_api.reply_message(reply_token, message)
-        #self.go_back()
     
     def on_enter_notsingle(self, event):
         print("I'm entering notsingle")
