@@ -221,6 +221,10 @@ def webhook_handler():
             line_bot_api.reply_message(reply_token, [message, button])
         if not isinstance(event, MessageEvent) and not isinstance(event, PostbackEvent):
             continue
+        if isinstance(event, MessageEvent) and isinstance(event.message, StickerMessage):
+            message = StickerSendMessage(package_id='2', sticker_id='172')
+            reply_token = event.reply_token
+            line_bot_api.reply_message(reply_token, message)
         if isinstance(event, MessageEvent) and (not isinstance(event.message, TextMessage)):
             continue
         if isinstance(event, MessageEvent) and (not isinstance(event.message.text, str)):
