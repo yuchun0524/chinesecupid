@@ -70,6 +70,9 @@ Or You can use [servo](http://serveo.net/) to expose local servers to the intern
 
 不同月老有不同選單，左邊會有廟的照片、右邊則是該廟月老的照片，選單內會有各廟及其月老的簡短介紹
 
+## 特別功能
+每個連進 Bot 的用戶都有獨立的 machine
+
 ## Finite State Machine
 ![fsm](./fsm.png)
 
