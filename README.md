@@ -1,4 +1,4 @@
-# TOC Chinese cupid
+# Chinese cupid
 ## 說明
 這個聊天機器人可以幫助你找到適合的月老
 ## Setup
