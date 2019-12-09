@@ -12,23 +12,23 @@ from utils import send_text_message
 
 load_dotenv()
 
-machine = TocMachine(
-    states=[
-        "user", 
-        "menu",
-        "single",
-        "notsingle",
-        "queen",
-        "war",
-        "guanyin",
-        "cing",
-        "location",
-        "time",
-        "phone",
-        "draw",
-        "notice"
+machine = { #TocMachine(
+    "states" : [
+        'user', 
+        'menu',
+        'single',
+        'notsingle',
+        'queen',
+        'war',
+        'guanyin',
+        'cing',
+        'location',
+        'time',
+        'phone',
+        'draw',
+        'notice'
     ],
-    transitions=[
+    "transitions": [
         {
             "trigger": "advance",
             "source": "user",
@@ -132,10 +132,10 @@ machine = TocMachine(
             "conditions": "back_to_user",
         },
     ],
-    initial="user",
-    auto_transitions=False,
-    show_conditions=True,
-)
+    "initial":"user",
+    "auto_transitions":False,
+    "show_conditions":True,
+}
 
 app = Flask(__name__, static_url_path="")
 
@@ -197,12 +197,13 @@ def webhook_handler():
 
     # parse webhook body
     try:
-        events = parser.parse(body, signature)
+        events = parser.parse(body, signature)       
     except InvalidSignatureError:
         abort(400)
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
+        
         if isinstance(event, FollowEvent):
             message = TextSendMessage(text = '歡迎使用本服務~~\n想拜月老卻不知道該拜哪一間嗎？讓我來幫助你吧！請點選「我要問事」以便使用本服務。\n溫馨小提醒：沒有規定一定要拜某一間廟的月老，以下提供的資訊只是幫助你更快做出選擇。')
             button = TemplateSendMessage(
@@ -229,9 +230,18 @@ def webhook_handler():
             continue
         if isinstance(event, MessageEvent) and (not isinstance(event.message.text, str)):
             continue
-        print(f"\nFSM STATE: {machine.state}")
+        if isinstance(event, MessageEvent) and isinstance(event.message.text, str):
+            if event.source.user_id not in machine:
+                machine[event.source.user_id] = TocMachine(
+                    states = machine["states"],
+                    transitions = machine["transitions"],
+                    initial = machine["initial"],
+                    auto_transitions = machine["auto_transitions"],
+                    show_conditions = machine["show_conditions"],
+                )
+        print(f"\nFSM STATE: {machine[event.source.user_id].state}")
         print(f"REQUEST BODY: \n{body}")
-        response = machine.advance(event)
+        response = machine[event.source.user_id].advance(event)
         if response == False:
             send_text_message(event.reply_token, "我去幫忙月老啦！請你再試試看別的選項。要不要試試按返回什麼主選單呢？\n小提示：在廟宇選單內按下返回首頁可以回到一開始的歡迎訊息喔！")
 
