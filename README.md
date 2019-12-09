@@ -1,6 +1,6 @@
 # TOC Chinese cupid
 ## 說明
-這個聊天機器人可以幫助你找到適合拜哪一間廟的月老
+這個聊天機器人可以幫助你找到適合的月老
 ## Setup
 
 ### Prerequisite
@@ -62,6 +62,13 @@ Or You can use [servo](http://serveo.net/) to expose local servers to the intern
 
 
 ## 功能
+藉由詢問兩個問題來找出適合使用者的月老，此處只有列出台南中西區有名的四大月老
+
+四大月老分別是大天后宮、祀典武廟、大觀音亭和重慶寺的月老
+
+同時有查詢位置、開放時間、聯絡方式，介紹各廟求籤或求紅線等流程、列出注意事項等功能
+
+不同月老有不同選單，左邊會有廟的照片、右邊則是該廟月老的照片，選單內會有各廟及其月老的簡短介紹
 
 ## Finite State Machine
 ![fsm](./fsm.png)
