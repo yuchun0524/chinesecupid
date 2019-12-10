@@ -99,7 +99,16 @@ The initial state is set to `user`.
 	* Input: "go to state2"
 		* Reply: "I'm entering state2"
 ## Demo畫面
-
+一開始的畫面
+![fsm](./img/start.png)
+點選我要問事之後
+![fsm](./img/menu.png)
+點選單身之後的畫面
+![fsm](./img/single.png)
+廟宇主選單
+![fsm](./img/temple.png)
+點選返回首頁之後會回到一開始的狀態
+![fsm](./img/continue.png)
 
 ## Reference
 [Pipenv](https://medium.com/@chihsuan/pipenv-更簡單-更快速的-python-套件管理工具-135a47e504f4) ❤️ [@chihsuan](https://github.com/chihsuan)
