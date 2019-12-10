@@ -79,11 +79,16 @@ Or You can use [servo](http://serveo.net/) to expose local servers to the intern
 一開始`我要問事`按鈕的actions是MessageAction，也就是使用者點選後會送出訊息，藉由使用者送出訊息來取得使用者的id，就可以為不同的使用者建立不同的machine
 ## Finite State Machine
 ![fsm](./fsm.png)
-* `user`state：列出歡迎訊息和`我要問事`按鈕，廟宇選單中的返回首頁是用postback的方式回到該狀態
-* `menu`state：列出詢問感情狀態的按鈕，收到特定text之後會進入該狀態
-###
-
-*`single` state：
+* **`user`state**：列出歡迎訊息和`我要問事`按鈕，廟宇選單中的返回首頁是用postback的方式回到該狀態
+* **`menu`state**：列出詢問感情狀態的按鈕，收到特定text之後會進入該狀態
+***
+* **`single` state單身**：列出詢問使用者有什麼祈求的按鈕，使用者在`menu`按下按鈕後會用postback的方式進來此狀態
+* **`notsingle`state**非單身**：列出詢問使用者有什麼祈求的按鈕，使用者在`menu`按下按鈕後會用postback的方式進入此狀態
+***
+* **`queen`state大天后宮**：
+* **`war`state祀典武廟**：
+* **`guanyin`state大觀音亭**：
+* **`cing`state重慶寺**：
 ## Usage
 The initial state is set to `user`.
 
