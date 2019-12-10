@@ -66,16 +66,24 @@ Or You can use [servo](http://serveo.net/) to expose local servers to the intern
 
 四大月老分別是大天后宮、祀典武廟、大觀音亭和重慶寺的月老
 
-同時有查詢位置、開放時間、聯絡方式，介紹各廟求籤或求紅線等流程、列出注意事項等功能
-
-不同月老有不同選單，左邊會有廟的照片、右邊則是該廟月老的照片，選單內會有各廟及其月老的簡短介紹
+每間廟都會有自己的選單，選單會有兩個部分，左邊會有廟的照片及關於該廟的概述、右邊則是該廟月老的照片及關於該月老的簡述，選單功能包含
+* 位置
+* 開放時間
+* 聯絡方式
+* 流程(求籤、求紅線流程等等)
+* 注意事項
+* 返回首頁
 
 ## 特別功能
-每個連進 Bot 的用戶都有獨立的 machine
-
+* 每個連進 Bot 的用戶都有獨立的 machine
+一開始`我要問事`按鈕的actions是MessageAction，也就是使用者點選後會送出訊息，藉由使用者送出訊息來取得使用者的id，就可以為不同的使用者建立不同的machine
 ## Finite State Machine
 ![fsm](./fsm.png)
+* `user`state：列出歡迎訊息和`我要問事`按鈕，廟宇選單中的返回首頁是用postback的方式回到該狀態
+* `menu`state：列出詢問感情狀態的按鈕，收到特定text之後會進入該狀態
+###
 
+*`single` state：
 ## Usage
 The initial state is set to `user`.
 
@@ -99,15 +107,15 @@ The initial state is set to `user`.
 	* Input: "go to state2"
 		* Reply: "I'm entering state2"
 ## Demo畫面
-一開始的畫面
+* 一開始的畫面
 ![fsm](./img/start.png)
-點選我要問事之後
+* 點選我要問事之後
 ![fsm](./img/menu.png)
-點選單身之後的畫面
+* 點選單身之後的畫面
 ![fsm](./img/single.png)
-廟宇主選單
+* 廟宇主選單
 ![fsm](./img/temple.png)
-點選返回首頁之後會回到一開始的狀態
+* 點選返回首頁之後會回到一開始的狀態
 ![fsm](./img/continue.png)
 
 ## Reference
