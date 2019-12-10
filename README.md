@@ -85,10 +85,15 @@ Or You can use [servo](http://serveo.net/) to expose local servers to the intern
 * **`single` 單身**：列出詢問使用者有什麼祈求的按鈕，使用者在`menu`按下按鈕後會用postback的方式進來此狀態
 * **`notsingle`非單身**：列出詢問使用者有什麼祈求的按鈕，使用者在`menu`按下按鈕後會用postback的方式進入此狀態
 ***
-* **`queen`大天后宮**：
-* **`war`祀典武廟**：
-* **`guanyin`大觀音亭**：
-* **`cing`重慶寺**：
+* **`queen`**：列出大天后宮選單
+* **`war`**：列出祀典武廟選單
+* **`guanyin`**：列出大觀音亭選單
+* **`cing`**：列出大觀音亭選單
+* **`location`**：會送出location message和返回button，根據不同的postback來決定要回應哪間廟的位置
+* **`time`**：會送出時間的message和返回button，根據不同的postback來決定要回應哪間廟的開放時間
+* **`phone`**：會送出電話的message和返回button，根據不同的postback來決定要回應哪間廟的聯絡方式
+* **`draw`**：會送出流程的message和返回button，根據不同的postback來決定要回應哪間廟求籤、求紅線或是攪醋矸流程
+* **`notice`**：會送出注意事項的message和返回button，根據不同的postback來決定要回應哪間廟的注意事項，只有重慶寺的不同，其他三間廟的是一樣的
 ## Usage
 The initial state is set to `user`.
 
