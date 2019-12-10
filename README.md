@@ -1,16 +1,6 @@
-# TOC Project 2020
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/dc7fa47fcd809b99d087/maintainability)](https://codeclimate.com/github/NCKU-CCS/TOC-Project-2020/maintainability)
-
-[![Known Vulnerabilities](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020/badge.svg)](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020)
-
-
-Template Code for TOC Project 2020
-
-A Line bot based on a finite state machine
-
-More details in the [Slides](https://hackmd.io/@TTW/ToC-2019-Project#) and [FAQ](https://hackmd.io/s/B1Xw7E8kN)
-
+# Chinese cupid
+## 說明
+這個聊天機器人可以幫助你找到適合的月老
 ## Setup
 
 ### Prerequisite
@@ -54,7 +44,7 @@ brew cask install ngrok
 **`ngrok` would be used in the following instruction**
 
 ```sh
-ngrok http 8000
+./ngrok http 8000
 ```
 
 After that, `ngrok` would generate a https URL.
@@ -70,11 +60,36 @@ python3 app.py
 Or You can use [servo](http://serveo.net/) to expose local servers to the internet.
 
 
+
+## 功能
+藉由詢問兩個問題來找出適合使用者的月老，此處只有列出台南中西區有名的四大月老
+
+四大月老分別是大天后宮、祀典武廟、大觀音亭和重慶寺的月老
+
+同時有查詢位置、開放時間、聯絡方式，介紹各廟求籤或求紅線等流程、列出注意事項等功能
+
+不同月老有不同選單，左邊會有廟的照片、右邊則是該廟月老的照片，選單內會有各廟及其月老的簡短介紹
+
+## 特別功能
+每個連進 Bot 的用戶都有獨立的 machine
+
 ## Finite State Machine
-![fsm](./img/show-fsm.png)
+![fsm](./fsm.png)
 
 ## Usage
 The initial state is set to `user`.
+
+一開始會有歡迎訊息和`我要問事`按鈕
+
+點選按鈕之後會進入`menu`state，根據選項不同會分別進入`single`和`notsingle`state
+
+`single`和`notsingle`state會根據選項不同分別進入`queen`、`war`、`guanyin`和`cing`state
+
+這四個state代表不同廟宇，分別是大天后宮、祀典武廟、大觀音亭和重慶寺
+
+四個不同的state有不同的選單，選單可查看廟宇資訊，廟宇資訊有`位置`、`開放時間`、`聯絡方式`、`流程`和`注意事項`
+
+另外有在廟宇主選單設置`返回首頁`按鈕，按下即可回到一開始的`user`state，會呈現歡迎繼續使用的訊息
 
 Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
 
