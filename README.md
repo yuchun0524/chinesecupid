@@ -34,9 +34,9 @@
 
 一開始會有歡迎訊息和`我要問事`按鈕
 
-點選`我要問事`按鈕之後會進入`menu`state，根據選項不同會分別進入`single`或`notsingle`state
+點選`我要問事`按鈕之後會進入`menu`state，根據點擊的選項不同會分別進入`single`或`notsingle`state
 
-`single`和`notsingle`state會根據選項不同分別進入`queen`、`war`、`guanyin`或`cing`state
+`single`和`notsingle`state會根據點選的選項不同分別進入`queen`、`war`、`guanyin`或`cing`state
 
 這四個state代表不同廟宇，分別是大天后宮、祀典武廟、大觀音亭和重慶寺
 
@@ -51,7 +51,7 @@
 * **`single`**：詢問單身使用者有什麼祈求，使用者在`menu`按下按鈕後會用postback的方式進來此狀態
 * **`notsingle`**：詢問非單身使用者有什麼祈求，使用者在`menu`按下按鈕後會用postback的方式進入此狀態
 ***
-* **`queen`**：列出大天后宮選單，會從`single`或`notsingle`state進入，並且可從位置等相關資訊返回，都是用postback的方式
+* **`queen`**：列出大天后宮選單，會從`single`或`notsingle`state進入，並且從位置等相關資訊返回，都是用postback的方式
 * **`war`**：列出祀典武廟選單，可從`single`或`notsingle`state進入，並且從位置等相關資訊返回，都是用postback的方式
 * **`guanyin`**：列出大觀音亭選單，只會從`single`state進入，並且從位置等相關資訊返回，都是用postback的方式
 * **`cing`**：列出大觀音亭選單，能從`single`或`notsingle`state進入，並且從位置等相關資訊返回，都是用postback的方式
@@ -61,6 +61,7 @@
 * **`phone`**：會送出電話的message和返回button，根據不同的postback來決定要回應哪間廟的聯絡方式
 * **`draw`**：會送出流程的message和返回button，根據不同的postback來決定要回應哪間廟求籤、求紅線或是攪醋矸流程
 * **`notice`**：會送出注意事項的message和返回button，根據不同的postback來決定要回應哪間廟的注意事項，只有重慶寺的不同，其他三間廟的是一樣的
+
 ## Usage
 一開始會有歡迎訊息和`我要問事`按鈕
 
