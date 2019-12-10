@@ -50,29 +50,22 @@ The initial state is set to `user`.
 
 另外有在廟宇主選單設置`返回首頁`按鈕，按下即可回到一開始的`user`state，會呈現歡迎繼續使用的訊息
 
-
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
-
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
 ## Demo畫面
-**一開始的畫面**
+### **一開始的畫面**
 ![fsm](./img/start.png)
-**點選我要問事之後**
+### **點選我要問事之後**
 ![fsm](./img/menu.png)
-**點選單身之後的畫面**
+### **點選單身之後的畫面**
 ![fsm](./img/single.png)
-**點選非單身之後的畫面**
+### **點選非單身之後的畫面**
 ![fsm](./img/notsingle.png)
-**大天后宮主選單**
+### **大天后宮主選單**
 ![fsm](./img/temple.png)
-**祀典武廟主選單**
+### **祀典武廟主選單**
 ![fsm](./img/war.png)
-**大觀音亭主選單**
+### **大觀音亭主選單**
 ![fsm](./img/guanyin.png)
-**重慶寺主選單**
+### **重慶寺主選單**
 ![fsm](./img/cing.png)
-**點選返回首頁之後會回到一開始的畫面**
+### **點選返回首頁之後會回到一開始的畫面**
 ![fsm](./img/continue.png)
