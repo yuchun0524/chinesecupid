@@ -132,7 +132,7 @@ class TocMachine(GraphMachine):
         message = TemplateSendMessage(
         alt_text='不支援顯示樣板，請使用手機裝置',
         template=ButtonsTemplate(
-        thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
+        #thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
         title='請選擇感情狀態',
         text='沒有一言難盡的選項喔！',
         actions=[
@@ -157,7 +157,7 @@ class TocMachine(GraphMachine):
         message = TemplateSendMessage(
         alt_text='不支援顯示樣板，請使用手機裝置',
         template=ButtonsTemplate(
-        thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
+        #thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
         title='對月老有什麼祈求？',
         text='不同廟的月老有不同的專長，說出你的願望我能幫你選擇適合的月老喔！',
         actions=[
@@ -190,7 +190,7 @@ class TocMachine(GraphMachine):
         alt_text='不支援顯示樣板，請使用手機裝置',
         template=ButtonsTemplate(
         #thumbnail_image_url='https://blog.accupass.com/wp-content/uploads/2017/08/000000000002-768x516.jpg',
-        thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
+        #thumbnail_image_url='https://3.bp.blogspot.com/-3JxaP3B7Jq0/XHYDSYUtNUI/AAAAAAADRLs/FaBdkYzY5BwFlwhkZdsf3ps3nQbUqGnZACLcBGAs/s1600/1_Z40RUlwMP9bQGorLNxxfIg.png',
         title='對月老有什麼祈求？',
         text='不同廟的月老有不同的專長，說出你的願望我能幫你選擇適合的月老喔！',
         actions=[
